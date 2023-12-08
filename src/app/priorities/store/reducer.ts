@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { openModal, closeModal, changeName, submitPriority, changeTab } from './actions';
 import { PriorityInterface } from '../types/priority.interface';
+import * as PrioritiesActions from './actions';
 
 
 export interface PrioritiesState {
@@ -14,6 +15,7 @@ export interface PrioritiesState {
   created_at?: string;
   age?: number | null;
   status?: string;
+  isLoading: boolean;
 }
 
 export const initialState: PrioritiesState = {
@@ -26,7 +28,8 @@ export const initialState: PrioritiesState = {
   role: "",
   created_at: "",
   age: null,
-  status: "active"
+  status: "active",
+  isLoading: false
 }
 
 export const prioritiesReducer = createReducer(
@@ -39,15 +42,42 @@ export const prioritiesReducer = createReducer(
   }),
   on(changeName, (state, { newName }) => ({ ...state, name: newName })),
 
-  on(submitPriority, (state, action) => ({
+  on(PrioritiesActions.submitPriority, (state, action) => ({
     ...state,
-    name: action.name,
-    avatar: action.avatar,
-    role: action.role,
-    created_at: action.created_at,
-    age: action.age,
-    status: action.status,
+    priority: action.priority
+  })),
+
+  on(PrioritiesActions.updatePriority, (state, action) => ({
+    ...state,
+    priority: action.priority
+  })),
+
+  on(PrioritiesActions.deletePriority, (state, action) => ({
+    ...state,
+    priority: action.id
   })),
 
   on(changeTab, (state, { newTab }) => ({ ...state, tab: newTab })),
+
+  on(PrioritiesActions.getPriorities, (state) => {
+    console.log(state.isLoading);
+    return { ...state, isLoading: true };
+  }),
+  on(PrioritiesActions.getPrioritiesSuccess, (state, action) => {
+    console.warn('Priorities')
+    console.log(action.priorities);
+    return {
+      ...state,
+      isLoading: false,
+      priorities: action.priorities,
+    };
+  }),
+  on(PrioritiesActions.getPrioritiesFailure, (state, action) => {
+    console.log('Reducer: getPrioritiesFailure action dispatched');
+    return {
+      ...state,
+      isLoading: false,
+      error: action.error,
+    };
+  })
 );

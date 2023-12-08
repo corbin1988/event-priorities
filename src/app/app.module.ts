@@ -20,10 +20,11 @@ import { PrioritiesModule } from './priorities/priorities.module';
     StoreModule.forRoot(reducers, {
       metaReducers
     }),
-    EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    EffectsModule.forRoot(),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    PrioritiesModule
   ],
-  providers: [PrioritiesModule],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

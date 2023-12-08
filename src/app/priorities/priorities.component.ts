@@ -1,39 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-
-import { EffectsModule } from '@ngrx/effects';
-
-
+import * as PrioritiesActions from './store/actions';
 import { PriorityInterface } from './types/priority.interface';
 import { openModal, closeModal, changeTab, submitPriority } from './store/actions';
+import { AppState } from '../types/appState.interface';
 
-export interface PrioritiesState {
-  priorities: PriorityInterface[];
-  isModalOpen: boolean;
-  name: string;
-  slide: number;
-  tab: string;
-  avatar?: string;
-  role?: string;
-  created_at?: string;
-  age?: number | null;
-  status?: string;
-}
-
-export interface AppState {
-  priorities: PrioritiesState;
-}
 
 @Component({
   selector: 'app-priorities',
   // imports: [FormsModule],
   templateUrl: './priorities.component.html',
-  styleUrl: './priorities.component.css'
+  styleUrl: './priorities.component.css',
 })
 export class PrioritiesComponent {
   // private store = inject(Store);
@@ -47,7 +25,8 @@ export class PrioritiesComponent {
   created_at$: Observable<string | undefined>;
   age$: Observable<number | undefined | null>;
   status$: Observable<string | undefined>;
-  tab$: Observable<string>; 
+  tab$: Observable<string>;
+  isLoading$: Observable<boolean> 
 
 
   newName: string = '';
@@ -59,6 +38,7 @@ export class PrioritiesComponent {
 
   constructor(private store: Store<AppState>) {
     this.priorities$ = this.store.select(state => state.priorities.priorities); 
+    this.isLoading$ = this.store.select(state => state.priorities.isLoading);
 
     this.isModalOpen$ = this.store.select(state => state.priorities.isModalOpen);
     this.name$ = this.store.select(state => state.priorities.name);
@@ -70,14 +50,12 @@ export class PrioritiesComponent {
     this.tab$ = this.store.select(state =>  state.priorities.tab);
   }
 
-  // ngOnInit(): void {
-  //   this.store.dispatch(PrioritiesActions.getPriorities());
-  //   console.log(this.priorities$)
-  // }
+  ngOnInit(): void {
+    this.store.dispatch(PrioritiesActions.getPriorities());
+  }
 
   openModal() {
     this.store.dispatch(openModal());
-    console.log(this.isModalOpen$)
   }
 
   closeModal() {
@@ -96,8 +74,39 @@ export class PrioritiesComponent {
   // }
 
   submitForm(): void {
-    this.store.dispatch(
-      submitPriority({ name: this.newName, avatar: this.newAvatar, role: this.newRole, created_at: this.newCreatedAt, age: this.newAge, status: this.newStatus })
-    );
+    const randomNumber: number = Math.floor(Math.random() * 10000);
+
+    const randomNumberAsString: string = randomNumber.toString();
+
+    const priority: PriorityInterface = {
+      id: randomNumberAsString,
+      name: this.newName,
+      avatar: this.newAvatar,
+      role: this.newRole,
+      created_at: this.newCreatedAt,
+      age: this.newAge,
+      status: this.newStatus
+    };
+  
+    this.store.dispatch(PrioritiesActions.submitPriority({ priority }));
+  }
+
+  updateForm(): void {
+    
+    const priority: PriorityInterface = {
+      id: '1',
+      name: "Johnny",
+      avatar: 'johnny_avatar.jpg',
+      role: 'Owner',
+      created_at: '2022-04-15',
+      age: 40,
+      status: 'Offline'
+    };
+  
+    this.store.dispatch(PrioritiesActions.updatePriority({ priority }));
+  }
+
+  deletePriority(): void {  
+    this.store.dispatch(PrioritiesActions.deletePriority({ id: '3'}));
   }
 }

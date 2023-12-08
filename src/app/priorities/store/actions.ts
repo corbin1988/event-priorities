@@ -16,15 +16,19 @@ export const changeTab = createAction(
 
 export const submitPriority = createAction(
   '[Priorities] Submit Priority',
-  props<{
-    name: string;
-    avatar?: string;
-    role?: string;
-    created_at?: string;
-    age?: number | null;
-    status?: string;
-  }>()
+  props<{ priority: PriorityInterface }>()
 );
+
+export const updatePriority = createAction(
+  '[Priorities] Update Priority',
+  props<{ priority: PriorityInterface }>()
+);
+
+export const deletePriority = createAction(
+  '[Priorities] Delete Priority',
+  props<{ id: string }>()
+);
+
 
 export const getPriorities = createAction('[Priorities] Get Priorities');
 
