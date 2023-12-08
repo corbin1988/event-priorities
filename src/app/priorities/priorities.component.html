@@ -1,1 +1,61 @@
-<p>priorities works!</p>
+<div>
+  priorities:
+
+  <div *ngFor="let priority of priorities$ | async">
+    {{ priority.name }}
+  </div>
+</div>
+
+<button (click)="openModal()">Open</button>
+
+<div>New Name: {{ newName }}</div>
+
+<div>Current Count: {{ isModalOpen$ | async }}</div>
+
+<button (click)="closeModal()">Close</button>
+
+<div>
+  <p>Form</p>
+  <p>Name from state: {{ name$ | async }}</p>
+  <p>Is Modal Open: {{ isModalOpen$ | async }}</p>
+  <p>Avatar from state: {{ avatar$ | async }}</p>
+  <p>Role from state: {{ role$ | async }}</p>
+  <p>Created At from state: {{ created_at$ | async }}</p>
+  <p>Age from state: {{ age$ | async }}</p>
+  <p>Status from state: {{ status$ | async }}</p>
+</div>
+
+<div>
+  <input type="text" [(ngModel)]="newName" name="newName" placeholder="Name"><br>
+</div>
+<div>
+  <input type="text" [(ngModel)]="newAvatar" name="newAvatar" placeholder="Avatar"><br>
+</div>
+<div>
+  <input type="text" [(ngModel)]="newRole" name="newRole" placeholder="Role"><br>
+</div>
+<div>
+  <input type="text" [(ngModel)]="newCreatedAt" name="newCreatedAt" placeholder="Created At"><br>
+</div>
+<div>
+  <input type="number" [(ngModel)]="newAge" name="newAge" placeholder="Age"><br>
+</div>
+<div>
+  <input type="text" [(ngModel)]="newStatus" name="newStatus" placeholder="Status"><br>
+</div>
+
+<button (click)="submitForm()">Submit</button>
+<div>
+  <p>Tab from state: {{ tab$ | async }}</p>
+</div>
+<div>
+  <button (click)="changeTab('profile')">profile</button>
+</div>
+
+<div>
+  <button (click)="changeTab('permissions')">permissions</button>
+</div>
+
+<div>
+  <button (click)="changeTab('status')">status</button>
+</div>
