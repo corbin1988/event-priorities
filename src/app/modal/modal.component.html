@@ -11,27 +11,109 @@
       </div>
 
       <!-- Content-->
-      <div class="w-full flex justify-between">
+      <div class="w-full flex  justify-between">
         <app-modal-sidebar></app-modal-sidebar>
-      
-        <div class="w-full px-4">
-          <p class="text-gray-600">Modal Content Goes Here...</p>
+        
+        <div class="w-2/3 flex flex-col justify-center px-4" *ngIf="(tab$ | async) === 'profile'">
+            <div class="mb-4">
+              <label 
+                for="small-input" 
+                class="block mb-4 text-sm font-medium text-gray-900"
+              >
+               Users Name
+              </label>
+              <input 
+                [(ngModel)]="newName"
+                type="text" 
+                id="small-input" 
+                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-50">
+              </div>
+
+              <div>
+                <label for="number-input" class="block mb-2 text-sm font-medium text-gray-900">User age:</label>
+                <input 
+                  [(ngModel)]="newAge"
+                  type="number" 
+                  id="number-input" 
+                  aria-describedby="helper-text-explanation" 
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                  placeholder="10"
+
+                >
+              </div>
+            <div>
+              <label 
+                for="small-input" 
+                class="block mb-4 text-sm font-medium text-gray-900"
+              >
+                Avatar Image Link
+              </label>
+              <div class="w-full flex items-center justify-center mb-4">
+                <img 
+                  class="rounded-full w-36 h-36 " 
+                  [src]="newAvatar" 
+                  [alt]="newName" 
+                >
+              </div>
+              <input 
+                [(ngModel)]="newAvatar"
+                type="text" 
+                id="small-input" 
+                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-50"
+              >
+                
+            </div>
+        </div>
+
+        <div class="w-2/3 flex flex-col justify-center px-4" *ngIf="(tab$ | async) === 'permissions'">
+          <p class="text-gray-600 font-bold mb-3">Permissions</p>
+          <div class="flex items-center">
+            <input id="default-radio-1" type="radio" value="Owner" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" [(ngModel)]="newRole">
+            <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900">Owner</label>
+          </div>
+          <div class="flex items-center">
+            <input id="default-radio-2" type="radio" value="Admin" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" [(ngModel)]="newRole">
+            <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900">Admin</label>
+          </div>
+          <div class="flex items-center">
+            <input id="default-radio-3" type="radio" value="User" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" [(ngModel)]="newRole">
+            <label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900">User</label>
+          </div>
+        </div> 
+
+        <div class="w-full px-4" *ngIf="(tab$ | async) === 'status'">
+          <p class="text-gray-600 font-bold mb-3">Change Status</p>
+
+          <div class="flex items-center mb-16">
+            <button type="button" (click)="setStatus('active')" class="mr-3 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-xs px-3 py-1.5 text-center me-2 mb-2">
+              Active
+            </button>
+            <button type="button" (click)="setStatus('busy')" class="mr-3 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-xs px-3 py-1.5 text-center me-2 mb-2">
+              Busy
+            </button>
+            <button type="button" (click)="setStatus('away')" class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-xs px-3 py-1.5 text-center me-2 mb-2">
+              Away
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Close Button -->
-      <div class="w-full flex justify-end">
-        <button (click)="closeModal()" class="mr-4 mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M14.293 5.293a1 1 0 011.414 1.414L11.414 12l4.293 4.293a1 1 0 01-1.414 1.414L10 13.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 12 4.293 7.707a1 1 0 111.414-1.414L10 10.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-            Close Modal
-        </button>
-        <button class="mr-4 mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-          Go to Step 2
-        </button>
-        <button class="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-            Create
-        </button>
-      </div>
+  <!-- Close Button -->
+  <div class="w-full flex justify-end">
+    <button (click)="closeModal()" class="mr-4 mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+        <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M14.293 5.293a1 1 0 011.414 1.414L11.414 12l4.293 4.293a1 1 0 01-1.414 1.414L10 13.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 12 4.293 7.707a1 1 0 111.414-1.414L10 10.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Close Modal
+    </button>
+    <button class="mr-4 mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+      Go to Step 2
+    </button>
+    <button 
+      (click)="submitForm()"
+      class="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+    >
+        Create
+    </button>
+  </div>
   </div>

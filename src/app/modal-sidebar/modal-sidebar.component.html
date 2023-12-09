@@ -1,14 +1,14 @@
 <aside class="w-64" aria-label="Sidebar">
   <div class="px-3 py-4 overflow-y-auto rounded bg-gray-50">
       <ul class="space-y-2">
-          <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 cursor-pointer">
-              <span class="ml-3">Dashboard</span>
+          <li (click)="changeTab('profile')" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 cursor-pointer">
+              <span class="ml-3">Profile</span>
           </li>
-          <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 cursor-pointer">
-              <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+          <li (click)="changeTab('permissions')" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 cursor-pointer">
+              <span class="flex-1 ml-3 whitespace-nowrap">Permissions</span>
           </li>
-          <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 cursor-pointer">
-              <span class="flex-1 ml-3 whitespace-nowrap">Products</span>
+          <li (click)="changeTab('status')" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 cursor-pointer">
+              <span class="flex-1 ml-3 whitespace-nowrap">Status</span>
           </li>
       </ul>
   </div>
