@@ -58,10 +58,6 @@ export class PrioritiesComponent {
     this.store.dispatch(openModal());
   }
 
-  closeModal() {
-    this.store.dispatch(closeModal());
-  }
-
   changeTab(newValue: string) {
     this.store.dispatch(changeTab({ newTab: newValue }));
   }

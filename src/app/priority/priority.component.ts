@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { PrioritiesEffects } from '../priorities/store/effects';
@@ -15,13 +15,20 @@ import * as PrioritiesActions from '../priorities/store/actions';
 export class PriorityComponent {
 
   constructor(private store: Store<AppState>) {}
+  @Input() id: string = '';
+  @Input() name?: string = '';
+  @Input() age?: number = 0;
+  @Input() avatar?: string = '';
+  @Input() role?: string = '';
+  @Input() created_at?: string = '';
+  @Input() status?: string = '';
 
   updateForm(): void {
     
     const priority: PriorityInterface = {
       id: '1',
       name: "Johnny",
-      avatar: 'johnny_avatar.jpg',
+      avatar: 'https://i.pravatar.cc/100',
       role: 'Owner',
       created_at: '2022-04-15',
       age: 40,
@@ -29,6 +36,10 @@ export class PriorityComponent {
     };
   
     this.store.dispatch(PrioritiesActions.updatePriority({ priority }));
+  }
+
+  deletePriority(id: string): void {  
+    this.store.dispatch(PrioritiesActions.deletePriority({ id: id}));
   }
 
 }

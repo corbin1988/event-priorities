@@ -8,9 +8,9 @@ import { PriorityInterface } from './types/priority.interface';
 @Injectable()
 export class PrioritiesService {
   private priorities: PriorityInterface[] = [
-    { id: '1', name: 'John', age: 30, avatar: 'john_avatar.jpg', role: 'Admin', created_at: '2022-01-01', status: 'Active' },
-    { id: '2', name: 'Alice', age: 28, avatar: 'alice_avatar.jpg', role: 'User', created_at: '2022-02-15', status: 'Away' },
-    { id: '3', name: 'Bob', age: 35, avatar: 'bob_avatar.jpg', role: 'Moderator', created_at: '2022-02-15', status: 'Busy' },
+    { id: '1', name: 'John', age: 30, avatar: 'https://i.pravatar.cc/100', role: 'Admin', created_at: '2022-01-01', status: 'Active' },
+    { id: '2', name: 'Alice', age: 28, avatar: 'https://i.pravatar.cc/100', role: 'User', created_at: '2022-02-15', status: 'Away' },
+    { id: '3', name: 'Bob', age: 35, avatar: 'https://i.pravatar.cc/100', role: 'Moderator', created_at: '2022-02-15', status: 'Busy' },
   ];
 
   // READ operation - Get all priorities

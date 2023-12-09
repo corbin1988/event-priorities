@@ -16,7 +16,7 @@
           </div>
 				<div class="lg:ml-40 ml-10 space-x-8">
 					<button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Import</button>
-					<button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Create</button>
+					<button (click)="openModal()" class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Create</button>
 				</div>
 			</div>
 		</div>
@@ -41,18 +41,34 @@
                     Status
                 </div>
             </div>
-            <ul>
-              <app-priority></app-priority>
-                <!-- Add more list items as needed -->
+            <ul *ngIf="(priorities$ | async) as priorities;">
+              <ng-container *ngIf="!(isLoading$ | async)">
+                <li *ngFor="let priority of priorities">
+                  <app-priority 
+                    [id]="priority.id" 
+                    [name]="priority.name" 
+                    [age]="priority.age" 
+                    [avatar]="priority.avatar" 
+                    [role]="priority.role" 
+                    [created_at]="priority.created_at" 
+                    [status]="priority.status"
+                  ></app-priority>
+                </li>
+              </ng-container>
             </ul>
+            
+            <div class="p-6" *ngIf="(isLoading$ | async)">
+              Loading... <!-- Display a loading message or spinner when isLoading$ is true -->
+            </div> 
+           
         </div>
 				</div>
 			</div>
 		</div>
 
 
-		<!-- <div *ngIf="isModalOpen$ | async"> -->
+		<div *ngIf="isModalOpen$ | async">
 			<app-modal></app-modal>
-		<!-- </div> -->
+		</div>
     
 	</div>
